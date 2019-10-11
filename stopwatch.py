@@ -6,7 +6,7 @@ from datetime import datetime
 
 taimestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 parser = argparse.ArgumentParser()
-parser.add_argument("--port", help="seria port name (etc COM3 or /dev/ttyUSB0)", default = 'COM18')
+parser.add_argument("--port", help="seria port name (etc COM18 or /dev/ttyUSB0)", default = 'COM18')
 parser.add_argument("--out", help="output file name", default = 'stopwatch_{}.txt'.format(taimestamp))
 parser.add_argument("--date", help="start date", default = '12.10.2001')
 parser.add_argument("--verbose", help="increase output verbosity",action="store_true")
@@ -69,4 +69,4 @@ if args.verbose:
 fout.write(line)
 fout.close() 
 
-print 'Done, saved to {}'.format(fname)git
+print 'Done, saved to {}'.format(fname)
