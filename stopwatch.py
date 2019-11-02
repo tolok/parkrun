@@ -6,7 +6,7 @@ from datetime import datetime
 
 taimestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 parser = argparse.ArgumentParser()
-parser.add_argument("--port", help="seria port name (etc COM18 or /dev/ttyUSB0)", default = 'COM18')
+parser.add_argument("--port", help="serial port name (e.g. COM18 or /dev/ttyUSB0 or /dev/tty.usbserial)", default = 'COM18')
 parser.add_argument("--out", help="output file name", default = 'stopwatch_{}.txt'.format(taimestamp))
 parser.add_argument("--date", help="start date", default = '12.10.2001')
 parser.add_argument("--verbose", help="increase output verbosity",action="store_true")
@@ -29,7 +29,7 @@ while 1:
 		indata = response[1].encode("hex") 		
 		break
 
-line = 'STARTOFEVENT,{} 00:00:00,junsd_stopwatch\n0,{} 00:00:00\n'.format(bogus,bogus) 
+line = 'STARTOFEVENT,{} 00:00:00,junsd_stopwatch\r\n0,{} 00:00:00\r\n'.format(bogus, bogus) 
 if args.verbose:
     print line
 
@@ -56,12 +56,12 @@ for chunk in chunks:
         if min == 60 : 
             hour += 1
             min = 0 
-        line = '{},{},{}:{}:{},{}:{}:{}\n'.format(pla,bogus,hour,min,sec,hour,min,sec)
+        line = '{0},{1},{2:02d}:{3:02d}:{4:02d} {5:02d}:{6:02d}:{7:02d}\r\n'.format(pla, bogus, hour, min, sec, hour, min, sec)
         if args.verbose:
             print line
         fout.write(line) 
 
-line = 'ENDOFEVENT,{}:{}:{}\n'.format(bogus,hour,min,sec)
+line = 'ENDOFEVENT,{0},{1:02d}:{2:02d}:{3:02d}\r\n'.format(bogus, hour, min, sec)
 
 if args.verbose:
     print line
